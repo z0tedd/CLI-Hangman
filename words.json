@@ -1,0 +1,18 @@
+{
+  "category": {
+    "fruits": {
+      "difficulty": {
+        "easy": ["apple", "banana", "melon"],
+        "medium": ["cherry", "strawberry", "lemon"],
+        "hard": ["dragonfruit", "cactus", "mango"]
+      }
+    },
+    "weapons": {
+      "difficulty": {
+        "easy": ["knife", "sword", "gun"],
+        "medium": ["tank", "plane", "missle"],
+        "hard": ["robot", "osint", "nuclear"]
+      }
+    }
+  }
+}
