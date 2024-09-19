@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// Custom error types
+// Custom error types.
 type FileOpenError struct {
 	Err error
 }

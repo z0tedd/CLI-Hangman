@@ -18,12 +18,18 @@ type Game struct {
 }
 
 func (g *Game) Start() {
-	for g.AttemptsLeft > 0 && !g.isWordGuessed() {
+	for g.AttemptsLeft > 0 && !g.IsWordGuessed() {
 		infrastructure.DisplayGameState(os.Stdout, g.Guessed, g.AttemptsLeft, g.MaxAttempts)
 
 		var input string
+
 		fmt.Print("Введите букву: ")
-		fmt.Scanln(&input)
+
+		_, err := fmt.Scanln(&input)
+		if err != nil {
+			return
+		}
+
 		input = strings.ToUpper(input)
 
 		if len(input) != 1 {
@@ -39,20 +45,21 @@ func (g *Game) Start() {
 
 		g.UsedLetters[letter] = true
 		if g.IsLetterInWord(letter) {
-			g.updateGuessedWord(letter)
+			g.UpdateGuessedWord(letter)
 		} else {
 			g.AttemptsLeft--
 		}
 	}
+
 	infrastructure.DisplayGameState(os.Stdout, g.Guessed, g.AttemptsLeft, g.MaxAttempts)
-	fmt.Println(g.endGame())
+	fmt.Println(g.EndGame())
 }
 
 func (g *Game) IsLetterInWord(letter rune) bool {
 	return strings.ContainsRune(g.WordToGuess, letter)
 }
 
-func (g *Game) updateGuessedWord(letter rune) {
+func (g *Game) UpdateGuessedWord(letter rune) {
 	for i, l := range g.WordToGuess {
 		if l == letter {
 			g.Guessed[i] = letter
@@ -60,18 +67,20 @@ func (g *Game) updateGuessedWord(letter rune) {
 	}
 }
 
-func (g *Game) isWordGuessed() bool {
+func (g *Game) IsWordGuessed() bool {
 	for _, letter := range g.Guessed {
 		if letter == '~' {
 			return false
 		}
 	}
+
 	return true
 }
 
-func (g *Game) endGame() string {
-	if g.isWordGuessed() {
+func (g *Game) EndGame() string {
+	if g.IsWordGuessed() {
 		return fmt.Sprintln("Вы угадали слово:", g.WordToGuess)
 	}
+
 	return fmt.Sprintln("Вы проиграли! Загаданное слово было:", g.WordToGuess)
 }

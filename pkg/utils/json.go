@@ -14,12 +14,12 @@ type DifficultyCategory struct {
 	Difficulty map[string][]string `json:"difficulty"`
 }
 
-func (data Category) GetVariety(category string, difficulty string) []string {
+func (data Category) GetVariety(category, difficulty string) []string {
 	return data.Category[category].Difficulty[difficulty]
 }
 
 // Why this function is so long?
-// 'Cause i decided to union opening file, reading file and parsing
+// 'Cause i decided to union opening file, reading file and parsing.
 func ReadAndParseWords(path string) (Category, error) {
 	// Define a variable of type Category
 	var Words Category
@@ -40,6 +40,6 @@ func ReadAndParseWords(path string) (Category, error) {
 		// ("Error unmarshalling JSON:", jsonError)
 		return Words, &JSONUnmarshalError{Err: err}
 	}
-	return Words, nil
 	// Print the result
+	return Words, nil
 }

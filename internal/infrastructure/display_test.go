@@ -1,17 +1,20 @@
-package infrastructure
+package infrastructure_test
 
 import (
 	"bytes"
-	"fmt"
 	"testing"
+
+	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/infrastructure"
 )
 
 func TestDisplayGameState(t *testing.T) {
 	var b bytes.Buffer
+
 	guessed := []rune("~~~~~~")
 	attemtsleft := 12
 	maxattempts := 12
-	DisplayGameState(&b, guessed, attemtsleft, maxattempts)
+
+	infrastructure.DisplayGameState(&b, guessed, attemtsleft, maxattempts)
 	got := b.String()
 	want := `
 Слово:  ~~~~~~
@@ -30,8 +33,10 @@ func TestDisplayGameState(t *testing.T) {
 	if got != want {
 		t.Errorf("got %q, want %q", got, want)
 	}
+
 	b.Reset()
-	DisplayGameState(&b, guessed, 0, maxattempts)
+
+	infrastructure.DisplayGameState(&b, guessed, 0, maxattempts)
 	got = b.String()
 	want = `
 Слово:  ~~~~~~
@@ -46,9 +51,8 @@ func TestDisplayGameState(t *testing.T) {
 Осталось попыток: 0
 
 `
+
 	if got != want {
-		fmt.Println(got)
-		fmt.Println(want)
 		t.Errorf("got = %q, want %q", got, want)
 	}
 }

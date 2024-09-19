@@ -1,12 +1,14 @@
-package domain
+package domain_test
 
 import (
 	"testing"
+
+	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/domain"
 )
 
 var (
 	usedLetters = map[rune]bool{'A': true}
-	g           = Game{
+	g           = domain.Game{
 		UsedLetters:  usedLetters,
 		WordToGuess:  "PAAA",
 		Guessed:      []rune{'~', '~', 'A', '~'},
@@ -17,34 +19,35 @@ var (
 )
 
 func TestUpdateGuessedWord(t *testing.T) {
-	g.updateGuessedWord('P')
+	g.UpdateGuessedWord('P')
+
 	if string(g.Guessed) != "P~A~" {
 		t.Error("Guessed word isn't matched")
 	}
 }
 
 func TestIsWordGuessed(t *testing.T) {
-	if g.isWordGuessed() == true {
-		t.Error("function isWordGuessed doesn't work right")
+	if g.IsWordGuessed() == true {
+		t.Error("function IsWordGuessed doesn't work right")
 	}
 }
 
 func TestEndGame(t *testing.T) {
-	if g.endGame() != "Вы проиграли! Загаданное слово было: PAAA\n" {
-		t.Errorf("EndGame doesn't work right\n got: %s", g.endGame())
+	if g.EndGame() != "Вы проиграли! Загаданное слово было: PAAA\n" {
+		t.Errorf("EndGame doesn't work right\n got: %s", g.EndGame())
 	}
 }
 
 func TestIsLetterInWord(t *testing.T) {
-	t.Log(g.AttemptsLeft)
 	if g.IsLetterInWord('A') != true {
 		t.Errorf("s.Display() = %q, want %q", 1, 0)
 	}
 }
 
 func TestIsNotWordGuessed(t *testing.T) {
-	g.updateGuessedWord('A')
-	if g.isWordGuessed() == false {
-		t.Error("function isWordGuessed doesn't work right")
+	g.UpdateGuessedWord('A')
+
+	if g.IsWordGuessed() == false {
+		t.Error("function IsWordGuessed doesn't work right")
 	}
 }

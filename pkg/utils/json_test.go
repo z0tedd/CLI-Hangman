@@ -1,12 +1,14 @@
-package utils
+package utils_test
 
 import (
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/pkg/utils"
 )
 
-var TestJson = []byte(`
+var TestJSON = []byte(`
 {
   "category": {
     "fruits": {
@@ -19,7 +21,7 @@ var TestJson = []byte(`
     "weapons": {
       "difficulty": {
         "easy": ["knife", "sword", "gun"],
-        "medium": ["tank", "plane", "missle"],
+        "medium": ["tank", "plane", "missile"],
         "hard": ["robot", "osint", "nuclear"]
       }
     }
@@ -33,17 +35,27 @@ func check(err error, t *testing.T) {
 }
 
 func TestGetVariety(t *testing.T) {
-	err := os.WriteFile("test.json", TestJson, 0644)
+	err := os.WriteFile("test.json", TestJSON, 0o600)
 	check(err, t)
+
 	defer os.Remove("test.json")
-	var Words Category
-	Words, err = ReadAndParseWords("test.json")
+
+	var Words utils.Category
+
+	Words, err = utils.ReadAndParseWords("test.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	got := Words.GetVariety("fruits", "easy")
+
 	want := []string{"apple", "banana", "melon"}
 	if !(reflect.DeepEqual(got, want)) {
 		t.Fatalf("got: %q, want %q", got, want)
 	}
+
 	got = Words.GetVariety("weapons", "easy")
+
 	want = []string{"knife", "sword", "gun"}
 
 	if !(reflect.DeepEqual(got, want)) {
@@ -52,13 +64,16 @@ func TestGetVariety(t *testing.T) {
 }
 
 func TestReadAndParseWords(t *testing.T) {
-	err := os.WriteFile("test.json", TestJson, 0644)
+	err := os.WriteFile("test.json", TestJSON, 0o600)
 	check(err, t)
+
 	defer os.Remove("test.json")
-	var Words Category
-	Words, err = ReadAndParseWords("test.json")
+
+	var Words utils.Category
+	Words, err = utils.ReadAndParseWords("test.json")
 
 	check(err, t)
+
 	check := Words.Category["fruits"].Difficulty["easy"][0]
 	if check != "apple" {
 		t.Errorf("got %q, expected - %q", check, "apple")
@@ -66,12 +81,15 @@ func TestReadAndParseWords(t *testing.T) {
 }
 
 func TestReadAndParseWordsJsonError(t *testing.T) {
-	ErrorJson := "{name: test}" // random json data, unmarshall must return error
-	err := os.WriteFile("test.json", []byte(ErrorJson), 0644)
+	ErrorJSON := "{name: test}" // random json data, unmarshall must return error
+	err := os.WriteFile("test.json", []byte(ErrorJSON), 0o600)
 	check(err, t)
+
 	defer os.Remove("test.json")
-	var Words Category
-	Words, err = ReadAndParseWords("test.json")
+
+	var Words utils.Category
+
+	Words, err = utils.ReadAndParseWords("test.json")
 	if err == nil {
 		t.Fatalf("function doesn't return error, words - %q, err - %q", Words, err)
 	}
