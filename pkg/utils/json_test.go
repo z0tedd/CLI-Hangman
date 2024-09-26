@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/domain"
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/pkg/utils"
 )
 
@@ -40,7 +41,7 @@ func TestGetVariety(t *testing.T) {
 
 	defer os.Remove("test.json")
 
-	var Words utils.Category
+	var Words domain.Category
 
 	Words, err = utils.ReadAndParseWords("test.json")
 	if err != nil {
@@ -69,7 +70,7 @@ func TestReadAndParseWords(t *testing.T) {
 
 	defer os.Remove("test.json")
 
-	var Words utils.Category
+	var Words domain.Category
 	Words, err = utils.ReadAndParseWords("test.json")
 
 	check(err, t)
@@ -87,7 +88,7 @@ func TestReadAndParseWordsJsonError(t *testing.T) {
 
 	defer os.Remove("test.json")
 
-	var Words utils.Category
+	var Words domain.Category
 
 	Words, err = utils.ReadAndParseWords("test.json")
 	if err == nil {

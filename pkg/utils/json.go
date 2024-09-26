@@ -4,25 +4,15 @@ import (
 	"encoding/json"
 	"io"
 	"os"
+
+	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/domain"
 )
-
-type Category struct {
-	Category map[string]DifficultyCategory `json:"category"`
-}
-
-type DifficultyCategory struct {
-	Difficulty map[string][]string `json:"difficulty"`
-}
-
-func (data Category) GetVariety(category, difficulty string) []string {
-	return data.Category[category].Difficulty[difficulty]
-}
 
 // Why this function is so long?
 // 'Cause i decided to union opening file, reading file and parsing.
-func ReadAndParseWords(path string) (Category, error) {
-	// Define a variable of type Category
-	var words Category
+func ReadAndParseWords(path string) (domain.Category, error) {
+	// Define a variable of type domain.Category
+	var words domain.Category
 	// JSON string to unmarshal
 
 	jsonFile, err := os.Open(path)

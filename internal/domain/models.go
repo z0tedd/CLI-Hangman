@@ -8,6 +8,18 @@ import (
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/infrastructure"
 )
 
+type Category struct {
+	Category map[string]DifficultyCategory `json:"category"`
+}
+
+type DifficultyCategory struct {
+	Difficulty map[string][]string `json:"difficulty"`
+}
+
+func (data Category) GetVariety(category, difficulty string) []string {
+	return data.Category[category].Difficulty[difficulty]
+}
+
 type Game struct {
 	UsedLetters  map[rune]bool
 	WordToGuess  string
