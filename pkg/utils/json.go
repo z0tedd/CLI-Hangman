@@ -22,12 +22,12 @@ func (data Category) GetVariety(category, difficulty string) []string {
 // 'Cause i decided to union opening file, reading file and parsing.
 func ReadAndParseWords(path string) (Category, error) {
 	// Define a variable of type Category
-	var Words Category
+	var words Category
 	// JSON string to unmarshal
 
 	jsonFile, err := os.Open(path)
 	if err != nil {
-		return Words, &FileOpenError{Err: err}
+		return words, &FileOpenError{Err: err}
 	}
 
 	// Defer the closing of our jsonFile so that we can parse it later on
@@ -35,11 +35,11 @@ func ReadAndParseWords(path string) (Category, error) {
 	byteValue, _ := io.ReadAll(jsonFile)
 
 	// Unmarshal the JSON data into the Go struct
-	err = json.Unmarshal(byteValue, &Words)
+	err = json.Unmarshal(byteValue, &words)
 	if err != nil {
 		// ("Error unmarshalling JSON:", jsonError)
-		return Words, &JSONUnmarshalError{Err: err}
+		return words, &JSONUnmarshalError{Err: err}
 	}
 	// Print the result
-	return Words, nil
+	return words, nil
 }
