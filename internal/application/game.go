@@ -12,15 +12,10 @@ func NewGame(word string, difficulty int) *domain.Game {
 
 	maxAttempts := options.MaxAttempts
 
-	guessedword := make([]rune, len(word))
-	for i := range word {
-		guessedword[i] = '~'
-	}
-
 	return &domain.Game{
 		UsedLetters:  make(map[rune]bool),
 		WordToGuess:  strings.ToUpper(word),
-		Guessed:      guessedword,
+		Guessed:      []rune(strings.Repeat("~", len(word))),
 		AttemptsLeft: maxAttempts,
 		MaxAttempts:  maxAttempts,
 		Difficulty:   difficulty,
