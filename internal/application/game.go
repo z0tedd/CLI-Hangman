@@ -3,26 +3,16 @@ package application
 import (
 	"strings"
 
+	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/config"
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/domain"
 )
 
 func NewGame(word string, difficulty int) *domain.Game {
-	var maxAttempts int
+	options := config.GetOptions(difficulty)
 
-	var guessedword []rune
+	maxAttempts := options.MaxAttempts
 
-	switch difficulty {
-	case 1:
-		maxAttempts = 12
-	case 2:
-		maxAttempts = 9
-	case 3:
-		maxAttempts = 7
-	default:
-		maxAttempts = 7
-	}
-
-	guessedword = make([]rune, len(word))
+	guessedword := make([]rune, len(word))
 	for i := range word {
 		guessedword[i] = '~'
 	}
