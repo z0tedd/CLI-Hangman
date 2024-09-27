@@ -2,11 +2,11 @@ package application_test
 
 import (
 	"os"
-	"slices"
 	"testing"
 
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/application"
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/pkg/utils"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetRandomWord(t *testing.T) {
@@ -31,34 +31,23 @@ func TestGetRandomWord(t *testing.T) {
 }`)
 
 	err := os.WriteFile("test.json", TestJSON, 0o600)
-	if err != nil {
-		t.Error(err)
-	}
+	assert.Nil(t, err, err)
 
 	defer os.Remove("test.json")
 
 	Words, err := utils.ReadAndParseWords("test.json")
-	if err != nil {
-		t.Error(err)
-	}
+
+	assert.Nil(t, err, err)
 
 	variety := Words.GetVariety("fruits", "easy")
 
 	word, err := application.GetRandomWord("fruits", "easy", "test.json")
-	if err != nil {
-		t.Error(err)
-	}
+	assert.Nil(t, err, err)
 
-	if !(slices.Contains(variety, word)) {
-		t.Errorf("got %q, expected - %q", variety, word)
-	}
+	assert.Contains(t, variety, word, "got %q, expected - %q", variety, word)
 
 	word, err = application.GetRandomWord("fruits", "easy", "")
-	if word != "" {
-		t.Error("GetRandomWord doesn't return error")
-	}
+	assert.Equal(t, word, "", "GetRandomWord must return error in this example")
 
-	if err == nil {
-		t.Error("GetRandomWord doesn't return error")
-	}
+	assert.NotNil(t, err, "GetRandomWord must return error in this example")
 }

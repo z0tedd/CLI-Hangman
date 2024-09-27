@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/infrastructure"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestDisplayGameState(t *testing.T) {
@@ -29,10 +30,7 @@ func TestDisplayGameState(t *testing.T) {
 Осталось попыток: 12
 
 `
-
-	if got != want {
-		t.Errorf("got %q, want %q", got, want)
-	}
+	assert.Equal(t, got, want, "got %q, want %q", got, want)
 
 	b.Reset()
 
@@ -52,7 +50,5 @@ func TestDisplayGameState(t *testing.T) {
 
 `
 
-	if got != want {
-		t.Errorf("got = %q, want %q", got, want)
-	}
+	assert.Equal(t, got, want, "got %q, want %q", got, want)
 }

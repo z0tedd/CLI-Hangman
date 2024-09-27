@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/domain"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
@@ -20,34 +21,22 @@ var (
 
 func TestUpdateGuessedWord(t *testing.T) {
 	g.UpdateGuessedWord('P')
-
-	if string(g.Guessed) != "P~A~" {
-		t.Error("Guessed word isn't matched")
-	}
+	assert.Equal(t, "P~A~", string(g.Guessed), "Guessed word isn't matched: expected - %s, got - %b", "P~A~", string(g.Guessed))
 }
 
 func TestIsWordGuessed(t *testing.T) {
-	if g.IsWordGuessed() == true {
-		t.Error("function IsWordGuessed doesn't work right")
-	}
+	assert.Equal(t, false, g.IsWordGuessed(), "expected - true, got - %b", g.IsWordGuessed())
 }
 
 func TestEndGame(t *testing.T) {
-	if g.EndGame() != "Вы проиграли! Загаданное слово было: PAAA\n" {
-		t.Errorf("EndGame doesn't work right\n got: %s", g.EndGame())
-	}
+	assert.Equal(t, "Вы проиграли! Загаданное слово было: PAAA\n", g.EndGame(), "EndGame doesn't work right\n got: %s", g.EndGame())
 }
 
 func TestIsLetterInWord(t *testing.T) {
-	if g.IsLetterInWord('A') != true {
-		t.Errorf("s.Display() = %q, want %q", 1, 0)
-	}
+	assert.Equal(t, g.IsLetterInWord('A'), true, "IsletterInWord must be true")
 }
 
 func TestIsNotWordGuessed(t *testing.T) {
 	g.UpdateGuessedWord('A')
-
-	if g.IsWordGuessed() == false {
-		t.Error("function IsWordGuessed doesn't work right")
-	}
+	assert.Equal(t, true, g.IsWordGuessed(), "expected - true, got - %b", g.IsWordGuessed())
 }

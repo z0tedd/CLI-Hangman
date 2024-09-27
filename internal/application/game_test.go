@@ -5,6 +5,7 @@ import (
 
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/application"
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/domain"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewGame(t *testing.T) {
@@ -14,9 +15,6 @@ func TestNewGame(t *testing.T) {
 
 	for i := range len(variableAttempts) {
 		got = application.NewGame("apple", i+1)
-
-		if got.AttemptsLeft != variableAttempts[i] {
-			t.Fatalf("got - %q", got.AttemptsLeft)
-		}
+		assert.Equal(t, got.AttemptsLeft, variableAttempts[i], "got - %q", got.AttemptsLeft)
 	}
 }
