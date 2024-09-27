@@ -29,15 +29,11 @@ var TestJSON = []byte(`
   }
 }`)
 
-func check(err error, t *testing.T) {
+func TestGetVariety(t *testing.T) {
+	err := os.WriteFile("test.json", TestJSON, 0o600)
 	if err != nil {
 		t.Fatal(err)
 	}
-}
-
-func TestGetVariety(t *testing.T) {
-	err := os.WriteFile("test.json", TestJSON, 0o600)
-	check(err, t)
 
 	defer os.Remove("test.json")
 
@@ -66,14 +62,16 @@ func TestGetVariety(t *testing.T) {
 
 func TestReadAndParseWords(t *testing.T) {
 	err := os.WriteFile("test.json", TestJSON, 0o600)
-	check(err, t)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	defer os.Remove("test.json")
 
-	var Words domain.Category
-	Words, err = utils.ReadAndParseWords("test.json")
-
-	check(err, t)
+	Words, err := utils.ReadAndParseWords("test.json")
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	check := Words.Category["fruits"].Difficulty["easy"][0]
 	if check != "apple" {
@@ -83,8 +81,11 @@ func TestReadAndParseWords(t *testing.T) {
 
 func TestReadAndParseWordsJsonError(t *testing.T) {
 	ErrorJSON := "{name: test}" // random json data, unmarshall must return error
+
 	err := os.WriteFile("test.json", []byte(ErrorJSON), 0o600)
-	check(err, t)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	defer os.Remove("test.json")
 

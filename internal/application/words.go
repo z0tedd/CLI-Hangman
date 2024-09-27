@@ -1,13 +1,15 @@
-package utils
+package application
 
 import (
 	"crypto/rand"
 	"math/big"
+
+	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/pkg/utils"
 )
 
 func GetRandomWord(category, difficulty, path string) (string, error) {
 	// Dictionary contain all words sorted by category and difficulty
-	dictionary, err := ReadAndParseWords(path)
+	dictionary, err := utils.ReadAndParseWords(path)
 	if err != nil {
 		return "", err
 	}

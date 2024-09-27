@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/internal/application"
-	"github.com/central-university-dev/backend-academy_2024_project_1-go-z0tedd/pkg/utils"
 )
 
 func main() {
@@ -46,7 +45,7 @@ func main() {
 
 	Hardness := map[string]int{"easy": 1, "medium": 2, "hard": 3}
 	// Получение случайного слова
-	word, err := utils.GetRandomWord(category, difficulty, path)
+	word, err := application.GetRandomWord(category, difficulty, path)
 	if err != nil {
 		logger.Error(err.Error())
 		return
