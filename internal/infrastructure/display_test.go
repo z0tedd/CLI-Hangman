@@ -9,13 +9,12 @@ import (
 )
 
 func TestDisplayGameState(t *testing.T) {
-	var b bytes.Buffer
-
+	b := new(bytes.Buffer)
 	guessed := []rune("~~~~~~")
 	attemtsleft := 12
 	maxattempts := 12
 
-	infrastructure.DisplayGameState(&b, guessed, attemtsleft, maxattempts)
+	infrastructure.DisplayGameState(b, guessed, attemtsleft, maxattempts)
 	got := b.String()
 	want := `
 Слово:  ~~~~~~
@@ -34,7 +33,7 @@ func TestDisplayGameState(t *testing.T) {
 
 	b.Reset()
 
-	infrastructure.DisplayGameState(&b, guessed, 0, maxattempts)
+	infrastructure.DisplayGameState(b, guessed, 0, maxattempts)
 	got = b.String()
 	want = `
 Слово:  ~~~~~~
